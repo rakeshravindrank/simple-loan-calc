@@ -19,8 +19,8 @@ export class LoanCalculatorComponent implements OnInit {
     });
   }
 
-  removeComma(value:string) : string{
-    return value.replace(/[,]+/g,'');
+  removeComma(value:string) : string {
+    return value.replace(/[^0-9]+/g,'');
   }
 
   changeToDecimalFormat() {

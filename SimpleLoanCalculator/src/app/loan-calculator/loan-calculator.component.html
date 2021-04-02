@@ -18,8 +18,15 @@
                             (blur)="changeToDecimalFormat()"
                             class="form-control"                            
                             formControlName="monthlyIncome">   
+                        <span 
+                            *ngIf="!inputForm.get('monthlyIncome').valid && inputForm.get('monthlyIncome').touched"
+                            class="help-block">
+                            <span *ngIf="inputForm.get('monthlyIncome').errors['required']">
+                                Please enter monthly income
+                            </span>
+                        </span>
                     </div>
-                </div>
+                </div>                
                 <br>
                 <div >
                     <button type="submit" class="btn btn-primary">Submit</button>
