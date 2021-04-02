@@ -2,5 +2,27 @@
     <h1>{{title}}</h1>
 </div>
 <div class="container">
-    
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="inputForm"
+                (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="monthlyIncome">
+                            What is your Monthly Income?
+                        </label>
+                        <input                          
+                            type="number"
+                            id="monthlyIncome"
+                            class="form-control"
+                            formControlName="monthlyIncome">   
+                    </div>
+                </div>
+                <br>
+                <div >
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

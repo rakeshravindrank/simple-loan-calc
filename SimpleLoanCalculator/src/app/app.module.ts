@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoanCalculatorComponent } from './loan-calculator/loan-calculator.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { LoanCalculatorComponent } from './loan-calculator/loan-calculator.compo
     LoanCalculatorComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,    
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],
