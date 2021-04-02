@@ -24,6 +24,9 @@
                             <span *ngIf="inputForm.get('monthlyIncome').errors['required']">
                                 Please enter monthly income
                             </span>
+                            <span *ngIf="inputForm.get('monthlyIncome').errors['minimumMonthlyIncomeError']">
+                                Minimum monthly income should be 500000
+                            </span>
                         </span>
                     </div>
                 </div>                

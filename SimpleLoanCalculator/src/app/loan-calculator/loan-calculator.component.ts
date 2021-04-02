@@ -15,22 +15,37 @@ export class LoanCalculatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputForm = new FormGroup( {
-      'monthlyIncome': new FormControl('', [Validators.required]),
+      'monthlyIncome': new FormControl('', [Validators.required, , this.validationForMontlyIncome.bind(this)]),
     });
   }
 
   removeComma(value:string) : string {
-    return value.replace(/[^0-9]+/g,'');
+    return (value == null)? "":value.replace(/[^0-9]+/g,'');
   }
 
   changeToDecimalFormat() {
-    let inputValue = this.removeComma(this.inputForm.get('monthlyIncome').value);
-    let income: string = this.decimalPipe.transform(inputValue);
-    this.inputForm.get('monthlyIncome').setValue(income);
+    let inputValue = this.inputForm.get('monthlyIncome').value;
+    console.log("changeToDecimalFormat: inputValue = ",inputValue);
+    if(inputValue){
+      inputValue = this.removeComma(inputValue);
+      let income: string = this.decimalPipe.transform(inputValue);
+      this.inputForm.get('monthlyIncome').setValue(income, {emitEvent: false });
+    }
   }
 
   onSubmit() {
     console.log(this.inputForm);
   }
-
+  
+  validationForMontlyIncome(control: FormControl) : {[s: string]: boolean}{
+    let inputValue = this.removeComma(control.value);
+    console.log("inputValue =", inputValue);
+    if(inputValue) {
+      let inputNumber: number = Number(inputValue);
+      if(inputNumber<500000) {
+        return {'minimumMonthlyIncomeError': true};
+      }
+    }  
+    return null;
+  }
 }
