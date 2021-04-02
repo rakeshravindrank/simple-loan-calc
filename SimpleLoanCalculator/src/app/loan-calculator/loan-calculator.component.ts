@@ -20,6 +20,7 @@ export class LoanCalculatorComponent implements OnInit {
     this.inputForm = new FormGroup( {
       'monthlyIncome': new FormControl('', [Validators.required, , this.validationForMontlyIncome.bind(this)]),
       'requestedAmount': new FormControl('', [Validators.required, , this.validationForRequestedAmount.bind(this)]),
+      'loanTerm': new FormControl('', [Validators.required, Validators.min(36), Validators.max(360)]),
     });
   }
 

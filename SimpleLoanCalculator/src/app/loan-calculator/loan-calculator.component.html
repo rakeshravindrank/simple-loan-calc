@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         <label for="monthlyIncome">
-                            What is your Monthly Income?
+                            What is your monthly income?
                         </label>
                         <input                          
                             type="text"
@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         <label for="requestedAmount">
-                            What is the Requested Amount?
+                            What is the requested amount?
                         </label>
                         <input                          
                             type="text"
@@ -54,6 +54,33 @@
                         </span>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="loanTerm">
+                            What is the loan term? (in months)
+                        </label>
+                        <input                          
+                            type="number"
+                            autocomplete="off"
+                            id="loanTerm"
+                            class="form-control"                            
+                            formControlName="loanTerm">   
+                        <span 
+                            *ngIf="!inputForm.get('loanTerm').valid && inputForm.get('loanTerm').touched"
+                            class="help-block">
+                            <span *ngIf="inputForm.get('loanTerm').errors['required']">
+                                Please enter loan term
+                            </span>
+                            <span *ngIf="inputForm.get('loanTerm').errors.min">
+                                Minimum loan term should be 36
+                            </span>
+                            <span *ngIf="inputForm.get('loanTerm').errors.max">
+                                Maximum loan term should be 360
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
                               
                 <br>
                 <div >
