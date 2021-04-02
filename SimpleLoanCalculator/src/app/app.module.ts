@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoanCalculatorComponent } from './loan-calculator/loan-calculator.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DecimalPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

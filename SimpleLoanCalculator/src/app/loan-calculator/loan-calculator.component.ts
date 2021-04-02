@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 
@@ -9,12 +10,23 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 export class LoanCalculatorComponent implements OnInit {
   title : string = "Simple Loan Calculator";
   inputForm: FormGroup;
-  constructor() { }
+
+  constructor(private decimalPipe: DecimalPipe) { }
 
   ngOnInit(): void {
     this.inputForm = new FormGroup( {
       'monthlyIncome': new FormControl('', [Validators.required]),
     });
+  }
+
+  removeComma(value:string) : string{
+    return value.replace(/[,]+/g,'');
+  }
+
+  changeToDecimalFormat() {
+    let inputValue = this.removeComma(this.inputForm.get('monthlyIncome').value);
+    let income: string = this.decimalPipe.transform(inputValue);
+    this.inputForm.get('monthlyIncome').setValue(income);
   }
 
   onSubmit() {

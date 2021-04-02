@@ -12,9 +12,11 @@
                             What is your Monthly Income?
                         </label>
                         <input                          
-                            type="number"
+                            type="text"
+                            autocomplete="off"
                             id="monthlyIncome"
-                            class="form-control"
+                            (blur)="changeToDecimalFormat()"
+                            class="form-control"                            
                             formControlName="monthlyIncome">   
                     </div>
                 </div>

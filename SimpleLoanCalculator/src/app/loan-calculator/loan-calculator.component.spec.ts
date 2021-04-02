@@ -1,5 +1,7 @@
+import { DecimalPipe } from '@angular/common';
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { LoanCalculatorComponent } from './loan-calculator.component';
@@ -11,7 +13,9 @@ describe('LoanCalculatorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoanCalculatorComponent ]
+      declarations: [ LoanCalculatorComponent ],
+      imports: [ReactiveFormsModule],
+      providers: [DecimalPipe]
     })
     .compileComponents()
     .then(()=> {
