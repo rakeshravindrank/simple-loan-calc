@@ -15,7 +15,7 @@
                             type="text"
                             autocomplete="off"
                             id="monthlyIncome"
-                            (blur)="changeToDecimalFormat()"
+                            (blur)="changeMonthlyIncomeFormat()"
                             class="form-control"                            
                             formControlName="monthlyIncome">   
                         <span 
@@ -25,11 +25,36 @@
                                 Please enter monthly income
                             </span>
                             <span *ngIf="inputForm.get('monthlyIncome').errors['minimumMonthlyIncomeError']">
-                                Minimum monthly income should be 500000
+                                Minimum monthly income should be {{minimumMonthlyIncome}}
                             </span>
                         </span>
                     </div>
-                </div>                
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="requestedAmount">
+                            What is the Requested Amount?
+                        </label>
+                        <input                          
+                            type="text"
+                            autocomplete="off"
+                            id="requestedAmount"
+                            (blur)="changeRequestedAmountFormat()"
+                            class="form-control"                            
+                            formControlName="requestedAmount">   
+                        <span 
+                            *ngIf="!inputForm.get('requestedAmount').valid && inputForm.get('requestedAmount').touched"
+                            class="help-block">
+                            <span *ngIf="inputForm.get('requestedAmount').errors['required']">
+                                Please enter requested amount
+                            </span>
+                            <span *ngIf="inputForm.get('requestedAmount').errors['minimumRequestedAmountError']">
+                                Minimum requested amount should be {{minimumRequestedAmount}}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                              
                 <br>
                 <div >
                     <button type="submit" class="btn btn-primary">Submit</button>
