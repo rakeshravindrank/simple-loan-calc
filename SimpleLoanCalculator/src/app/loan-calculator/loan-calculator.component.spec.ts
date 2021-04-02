@@ -22,4 +22,10 @@ describe('LoanCalculatorComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it(`should have as title 'Simple Loan Calculator'`, () => {
+    const fixture = TestBed.createComponent(LoanCalculatorComponent);
+    const loanComponent = fixture.componentInstance;
+    expect(loanComponent.title).toEqual('Simple Loan Calculator');
+  });
 });

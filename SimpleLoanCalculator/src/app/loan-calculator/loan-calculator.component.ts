@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loan-calculator.component.css']
 })
 export class LoanCalculatorComponent implements OnInit {
-
+  title : string = "Simple Loan Calculator";
   constructor() { }
 
   ngOnInit(): void {
