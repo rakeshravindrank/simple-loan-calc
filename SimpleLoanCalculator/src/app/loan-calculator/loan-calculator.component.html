@@ -81,6 +81,35 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="children">
+                            How many children?
+                        </label>
+                        <div *ngFor="let children of childrenArray">
+                            <input 
+                                type="radio"
+                                id="children"
+                                [value] = "children"
+                                formControlName="children">  {{children}}  
+                        </div>                    
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="coapplicant">
+                            How many coapplicant?
+                        </label>
+                        <div *ngFor="let coapplicant of coapplicantArray">
+                            <input 
+                                type="radio"
+                                id="coapplicant"
+                                [value] = "coapplicant"
+                                formControlName="coapplicant">  {{coapplicant}}  
+                        </div>                    
+                    </div>
+                </div>
                               
                 <br>
                 <div >
