@@ -44,22 +44,17 @@ export class LoanCalculatorComponent implements OnInit {
   removeOtherCharacters(value:string) : string { 
     let decimalDotExist = false;
     let index = 0;
-    if(value != null) { 
-      console.log("removeOtherCharacters:b4value =",value);     
+    if(value != null) {    
       if(value.indexOf('.')> -1) {
         index = value.indexOf('.');
         decimalDotExist = true;
-        console.log("removeOtherCharacters:b4value index =",index);      
-        console.log("removeOtherCharacters:value =",value);
         
         //before and after length from the first decimal point found from right side
         //newValue is the value till first dot and will be used for length calculation
         let newValue = value.slice(0,index);
         let beforeLength = newValue.length;
-        console.log("b4 length =",beforeLength);
         newValue = (newValue == null)? "":newValue.replace(/[^0-9]+/g,'');
         let afterLength = newValue.length;
-        console.log("after length =",afterLength);
         //finding decimal point location logic ends
 
         value = (value == null)? "":value.replace(/[^0-9]+/g,'');
@@ -76,13 +71,11 @@ export class LoanCalculatorComponent implements OnInit {
         return (value == null)? "":value.replace(/[^0-9]+/g,'');
       }      
     }
-    console.log("removeOtherCharacters:aftervalue =",value);
     return value;
   }
 
   changeMonthlyIncomeFormat() {
     let inputValue = this.inputForm.get('monthlyIncome').value;
-    console.log("changeToDecimalFormat: inputValue = ",inputValue);
     if(inputValue){
       inputValue = this.removeOtherCharacters(inputValue);
       let income: string = this.decimalPipe.transform(inputValue);
@@ -92,7 +85,6 @@ export class LoanCalculatorComponent implements OnInit {
   
   validationForMontlyIncome(control: FormControl) : {[s: string]: boolean}{
     let inputValue = this.removeOtherCharacters(control.value);
-    console.log("validationForMontlyIncome: inputValue =", inputValue);
     if(inputValue) {
       let inputNumber: number = Number(inputValue);
       if(inputNumber<this.minimumMonthlyIncome) {
@@ -104,7 +96,6 @@ export class LoanCalculatorComponent implements OnInit {
 
   changeRequestedAmountFormat() {
     let inputValue = this.inputForm.get('requestedAmount').value;
-    console.log("changeRequestedAmountFormat: inputValue = ",inputValue);
     if(inputValue){
       inputValue = this.removeOtherCharacters(inputValue);
       let income: string = this.decimalPipe.transform(inputValue);
@@ -114,7 +105,6 @@ export class LoanCalculatorComponent implements OnInit {
 
   validationForRequestedAmount(control: FormControl) : {[s: string]: boolean}{
     let inputValue = this.removeOtherCharacters(control.value);
-    console.log("validationForRequestedAmount : inputValue =", inputValue);
     if(inputValue) {
       let inputNumber: number = Number(inputValue);
       if(inputNumber<this.minimumRequestedAmount) {
@@ -125,43 +115,47 @@ export class LoanCalculatorComponent implements OnInit {
   }  
 
   onSubmit() {
-    this.error = [];
-    this.loanResponse = null;
-    let loan = this.createPostData();
-    console.log(this.inputForm);
-    this.loanService.sendLoanRequest(loan).subscribe(
-      response => {
-        if(response!=null) {
-          this.loanResponse = new LoanResponse();
-          this.loanResponse.loanAmount = response.loanAmount/this.AMOUNT_CONVERSION_CONST;
-          this.loanResponse.interestRate = response.interestRate/this.AMOUNT_CONVERSION_CONST;
-        }
-        console.log("response =",response);
-        console.log("loanResponse =",this.loanResponse);
-      },
-      error => {
-        debugger;
-        if (error instanceof HttpErrorResponse) { 
-          if (error.error instanceof ErrorEvent || error.error instanceof ProgressEvent) {
-            this.error.push("Something wrong happened while getting response. Please contact administrator!!!");
-            console.log(error.message);
+    if(this.inputForm.valid) {
+      this.error = [];
+      this.loanResponse = null;
+      let loan = this.createPostData();
+      this.loanService.sendLoanRequest(loan).subscribe(
+        response => {
+          if(response!=null) {
+            this.loanResponse = new LoanResponse();
+            this.loanResponse.loanAmount = response.loanAmount/this.AMOUNT_CONVERSION_CONST;
+            this.loanResponse.interestRate = response.interestRate/this.AMOUNT_CONVERSION_CONST;
+          }
+        },
+        error => {
+          if (error instanceof HttpErrorResponse) { 
+            if (error.error instanceof ErrorEvent || error.error instanceof ProgressEvent) {
+              this.error.push("Something wrong happened while getting response. Please contact administrator!!!");
+            } else {
+                if(error && error.error && error.error.fields[0] && error.error.fields[0].message)
+                { 
+                  let field = error.error.fields;
+                  field.forEach((element: { message: string; }) => {
+                    this.error.push(element.message);            
+                  });          
+                }
+            }
           } else {
-              if(error && error.error && error.error.fields[0] && error.error.fields[0].message)
-              {
-                debugger; 
-                let field = error.error.fields;
-                field.forEach((element: { message: string; }) => {
-                  this.error.push(element.message);            
-                });          
-              }
-           }
-        } else {
-          this.error.push("Something wrong happened. Please contact administrator!!!");
+            this.error.push("Something wrong happened. Please contact administrator!!!");
+          }
         }
-      }
-    )
+      )
+    } else {
+      this.checkAllFormFields();
+    }
   }
 
+  checkAllFormFields() {
+    Object.keys(this.inputForm.controls).forEach(field => { 
+      const control = this.inputForm.get(field);            
+      control.markAsTouched({ onlySelf: true });       
+    });
+  }
 
   createPostData(): Loan {
     let loan = new Loan();    

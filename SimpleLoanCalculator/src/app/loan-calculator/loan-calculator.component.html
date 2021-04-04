@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-5">
                         <label for="loanTerm">
                             What is the loan term? (in months)
                         </label>
@@ -91,8 +91,15 @@
                                 type="radio"
                                 id="children"
                                 [value] = "children"
-                                formControlName="children">  {{children}}  
-                        </div>                    
+                                formControlName="children">  {{children}}                          
+                        </div>
+                        <span 
+                            *ngIf="!inputForm.get('children').valid && inputForm.get('children').touched"
+                            class="help-block">
+                            <span *ngIf="inputForm.get('children').errors['required']">
+                                Please select a value
+                            </span>
+                        </span>                    
                     </div>
                 </div>
 
@@ -106,14 +113,21 @@
                                 type="radio"
                                 id="coapplicant"
                                 [value] = "coapplicant"
-                                formControlName="coapplicant">  {{coapplicant}}  
-                        </div>                    
+                                formControlName="coapplicant">  {{coapplicant}}                              
+                        </div>  
+                        <span 
+                            *ngIf="!inputForm.get('coapplicant').valid && inputForm.get('coapplicant').touched"
+                            class="help-block">
+                            <span *ngIf="inputForm.get('coapplicant').errors['required']">
+                                Please select a value
+                            </span>
+                        </span>                  
                     </div>
                 </div>
                               
                 <br>
                 <div >
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" >Submit</button>
                 </div>
             </form>
         </div>
