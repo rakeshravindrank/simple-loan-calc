@@ -119,3 +119,24 @@
         </div>
     </div>
 </div>
+<br>
+
+<div class="container">
+    <div class="alert alert-success" *ngIf="this.loanResponse && error.length == 0">
+        <strong>Maximum loan available is listed below:</strong>
+        <li>
+            <label for="loanAmount">Loan Amount</label>
+            {{this.loanResponse.loanAmount | number}}
+        </li>
+        <li>
+            <label for="interestRate">Interest Rate</label>
+            {{this.loanResponse.interestRate}}%
+        </li>
+    </div>
+    <div class="alert alert-danger" *ngIf="error.length>0 && !this.loanResponse">
+        <h1>An error occured</h1>
+        <div *ngFor="let err of error">        
+            <p>{{err}}</p>
+        </div>
+    </div>
+</div>

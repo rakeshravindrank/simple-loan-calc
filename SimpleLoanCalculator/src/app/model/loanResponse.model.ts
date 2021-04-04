@@ -1,5 +1,5 @@
-export interface LoanResponse {
-    loanAmount: number,
+export class LoanResponse {
+    loanAmount: number
     interestRate: number
 }
 

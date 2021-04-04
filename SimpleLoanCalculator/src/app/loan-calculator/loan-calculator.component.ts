@@ -1,6 +1,11 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+
+import { Loan } from '../model/loan.model';
+import { LoanResponse } from '../model/loanResponse.model';
+import { LoanService } from '../service/loan.service';
 
 @Component({
   selector: 'app-loan-calculator',
@@ -8,17 +13,25 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./loan-calculator.component.css']
 })
 export class LoanCalculatorComponent implements OnInit {
-  title : string = "Simple Loan Calculator";
+  
   inputForm: FormGroup;
+  error: string [] = [];
+  loanResponse: LoanResponse = null;
+  AMOUNT_CONVERSION_CONST:number = 1000;
 
+  title : string = "Simple Loan Calculator";
   minimumMonthlyIncome: number = 500.000;
   minimumRequestedAmount: number = 20000.000;
   childrenArray = ['NONE', 'SINGLE', ' MULTIPLE'];
   coapplicantArray = ['NONE', 'SINGLE_BORROWER', ' MULTIPLE_BORROWERS'];
 
-  constructor(private decimalPipe: DecimalPipe) { }
+  constructor(private decimalPipe: DecimalPipe, private loanService: LoanService ) { }
 
   ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm() {
     this.inputForm = new FormGroup( {
       'monthlyIncome': new FormControl('', [Validators.required, , this.validationForMontlyIncome.bind(this)]),
       'requestedAmount': new FormControl('', [Validators.required, , this.validationForRequestedAmount.bind(this)]),
@@ -36,8 +49,7 @@ export class LoanCalculatorComponent implements OnInit {
       if(value.indexOf('.')> -1) {
         index = value.indexOf('.');
         decimalDotExist = true;
-        console.log("removeOtherCharacters:b4value index =",index);
-      
+        console.log("removeOtherCharacters:b4value index =",index);      
         console.log("removeOtherCharacters:value =",value);
         
         //before and after length from the first decimal point found from right side
@@ -48,7 +60,7 @@ export class LoanCalculatorComponent implements OnInit {
         newValue = (newValue == null)? "":newValue.replace(/[^0-9]+/g,'');
         let afterLength = newValue.length;
         console.log("after length =",afterLength);
-        //placing decimal logic ends
+        //finding decimal point location logic ends
 
         value = (value == null)? "":value.replace(/[^0-9]+/g,'');
         if(index>0 && beforeLength != afterLength) {
@@ -60,6 +72,8 @@ export class LoanCalculatorComponent implements OnInit {
           value = value.slice(0,index)+'.'+value.slice(index,value.length+1);
           index = 0;
         }
+      } else {
+        return (value == null)? "":value.replace(/[^0-9]+/g,'');
       }      
     }
     console.log("removeOtherCharacters:aftervalue =",value);
@@ -74,11 +88,6 @@ export class LoanCalculatorComponent implements OnInit {
       let income: string = this.decimalPipe.transform(inputValue);
       this.inputForm.get('monthlyIncome').setValue(income, {emitEvent: false });
     }
-  }
-
-  onSubmit() {
-
-    console.log(this.inputForm);
   }
   
   validationForMontlyIncome(control: FormControl) : {[s: string]: boolean}{
@@ -113,5 +122,54 @@ export class LoanCalculatorComponent implements OnInit {
       }
     }  
     return null;
+  }  
+
+  onSubmit() {
+    this.error = [];
+    this.loanResponse = null;
+    let loan = this.createPostData();
+    console.log(this.inputForm);
+    this.loanService.sendLoanRequest(loan).subscribe(
+      response => {
+        if(response!=null) {
+          this.loanResponse = new LoanResponse();
+          this.loanResponse.loanAmount = response.loanAmount/this.AMOUNT_CONVERSION_CONST;
+          this.loanResponse.interestRate = response.interestRate/this.AMOUNT_CONVERSION_CONST;
+        }
+        console.log("response =",response);
+        console.log("loanResponse =",this.loanResponse);
+      },
+      error => {
+        debugger;
+        if (error instanceof HttpErrorResponse) { 
+          if (error.error instanceof ErrorEvent || error.error instanceof ProgressEvent) {
+            this.error.push("Something wrong happened while getting response. Please contact administrator!!!");
+            console.log(error.message);
+          } else {
+              if(error && error.error && error.error.fields[0] && error.error.fields[0].message)
+              {
+                debugger; 
+                let field = error.error.fields;
+                field.forEach((element: { message: string; }) => {
+                  this.error.push(element.message);            
+                });          
+              }
+           }
+        } else {
+          this.error.push("Something wrong happened. Please contact administrator!!!");
+        }
+      }
+    )
+  }
+
+
+  createPostData(): Loan {
+    let loan = new Loan();    
+    loan.monthlyIncome = this.inputForm.get('monthlyIncome').value * this.AMOUNT_CONVERSION_CONST;
+    loan.requestedAmount =  this.inputForm.get('requestedAmount').value * this.AMOUNT_CONVERSION_CONST;
+    loan.loanTerm = this.inputForm.get('loanTerm').value;
+    loan.children = this.inputForm.get('children').value;
+    loan.coapplicant = this.inputForm.get('coapplicant').value;
+    return loan;
   }
 }
