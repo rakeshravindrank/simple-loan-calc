@@ -1,5 +1,7 @@
+import { Component } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -9,7 +11,8 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        MockLoanCalculatorComponent
       ],
     }).compileComponents();
   }));
@@ -20,3 +23,11 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'app-loan-calculator',
+  template: ''
+})
+class MockLoanCalculatorComponent {
+  
+}
