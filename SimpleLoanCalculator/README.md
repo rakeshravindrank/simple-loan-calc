@@ -1,27 +1,30 @@
-# SimpleLoanCalculator
+# simple-loan-calc
+Creating a simple loan calculator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.3.
+# Quick Overview & Functional Description
+Simple loan application is created based on the requirements provided.
+Reqiuired validations have been added for the fields.
+All the currency is converted as requested to the format 1,000.000.
+Function has been added to filter out other characters from the amount input field.
+Submission of form will happen only when all fields are provided with values.
 
-## Development server
+# Technical details
+Angular Reactive Forms feature was used to create the form.
+Added validations for all the fields as specified in requirements.
+Jasmine framework is used to cover basic unit testing from developers perspective.
+Developers can trigger the unit tests by using npm command "ng test".
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Info Note on issue found while development
+There was a minor problem submitting the form browser due to CORS issue.
+To run the application locally, we need to run it by disabling browser security.
+One can do that by running the below command in command prompt:
+chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
