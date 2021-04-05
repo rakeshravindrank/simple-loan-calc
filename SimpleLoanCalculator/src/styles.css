@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+button, input {
+    cursor: pointer;
+}
+
+h1 {
+    color: #264D73;
+}
+
+.border {
+    border: 1px solid rgba(20, 125, 196, 0.295) !important;
+    border-radius: 5px;
+}

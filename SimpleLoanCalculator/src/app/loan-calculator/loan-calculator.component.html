@@ -7,7 +7,7 @@
             <form [formGroup]="inputForm"
                 (ngSubmit)="onSubmit()">
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-5 border">
                         <label for="monthlyIncome">
                             What is your monthly income?
                         </label>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-5 border">
                         <label for="requestedAmount">
                             What is the requested amount?
                         </label>
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-5 border">
                         <label for="loanTerm">
                             What is the loan term? (in months)
                         </label>
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-5 border">
                         <label for="children">
                             How many children?
                         </label>
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-5 border">
                         <label for="coapplicant">
                             How many coapplicant?
                         </label>
@@ -127,7 +127,9 @@
                               
                 <br>
                 <div >
-                    <button type="submit" class="btn btn-primary" >Submit</button>
+                    <button type="submit" class="btn btn-primary"> Submit </button>
+                    &nbsp;
+                    <button type="button" class="btn btn-basic" (click)="clearValues()"> Clear </button>
                 </div>
             </form>
         </div>
@@ -136,21 +138,23 @@
 <br>
 
 <div class="container">
-    <div class="alert alert-success" *ngIf="this.loanResponse && error.length == 0">
-        <strong>Maximum loan available is listed below:</strong>
-        <li>
-            <label for="loanAmount">Loan Amount</label>
-            {{this.loanResponse.loanAmount | number}}
-        </li>
-        <li>
-            <label for="interestRate">Interest Rate</label>
-            {{this.loanResponse.interestRate}}%
-        </li>
-    </div>
-    <div class="alert alert-danger" *ngIf="error.length>0 && !this.loanResponse">
-        <h1>An error occured</h1>
-        <div *ngFor="let err of error">        
-            <p>{{err}}</p>
+    <div class="row">
+        <div class="alert alert-success col-md-5 border" *ngIf="this.loanResponse && error.length == 0 && this.inputForm.valid">
+            <strong>Maximum loan available is listed below:</strong>
+            <li>
+                <label for="loanAmount">Loan Amount</label>
+                {{this.loanResponse.loanAmount | number}}
+            </li>
+            <li>
+                <label for="interestRate">Interest Rate</label>
+                {{this.loanResponse.interestRate}}%
+            </li>
+        </div>
+        <div class="alert alert-danger col-md-5 border" *ngIf="error.length>0 && !this.loanResponse">
+            <h1>An error occured</h1>
+            <div *ngFor="let err of error">        
+                <p>{{err}}</p>
+            </div>
         </div>
     </div>
 </div>

@@ -115,9 +115,9 @@ export class LoanCalculatorComponent implements OnInit {
   }  
 
   onSubmit() {
-    if(this.inputForm.valid) {
-      this.error = [];
-      this.loanResponse = null;
+    this.error = [];
+    this.loanResponse = null;
+    if(this.inputForm.valid) {      
       let loan = this.createPostData();
       this.loanService.sendLoanRequest(loan).subscribe(
         response => {
@@ -165,5 +165,9 @@ export class LoanCalculatorComponent implements OnInit {
     loan.children = this.inputForm.get('children').value;
     loan.coapplicant = this.inputForm.get('coapplicant').value;
     return loan;
+  }
+
+  clearValues() {
+    this.inputForm.reset();
   }
 }
