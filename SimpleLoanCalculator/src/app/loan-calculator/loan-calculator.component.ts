@@ -22,8 +22,8 @@ export class LoanCalculatorComponent implements OnInit {
   title : string = "Simple Loan Calculator";
   minimumMonthlyIncome: number = 500.000;
   minimumRequestedAmount: number = 20000.000;
-  childrenArray = ['NONE', 'SINGLE', ' MULTIPLE'];
-  coapplicantArray = ['NONE', 'SINGLE_BORROWER', ' MULTIPLE_BORROWERS'];
+  childrenArray = ['NONE', 'SINGLE', 'MULTIPLE'];
+  coapplicantArray = ['NONE', 'SINGLE_BORROWER', 'MULTIPLE_BORROWERS'];
 
   constructor(private decimalPipe: DecimalPipe, private loanService: LoanService ) { }
 
@@ -33,8 +33,8 @@ export class LoanCalculatorComponent implements OnInit {
 
   initForm() {
     this.inputForm = new FormGroup( {
-      'monthlyIncome': new FormControl('', [Validators.required, , this.validationForMontlyIncome.bind(this)]),
-      'requestedAmount': new FormControl('', [Validators.required, , this.validationForRequestedAmount.bind(this)]),
+      'monthlyIncome': new FormControl('', [Validators.required, this.validationForMontlyIncome.bind(this)]),
+      'requestedAmount': new FormControl('', [Validators.required, this.validationForRequestedAmount.bind(this)]),
       'loanTerm': new FormControl('', [Validators.required, Validators.min(36), Validators.max(360)]),
       'children': new FormControl('', [Validators.required]),
       'coapplicant': new FormControl('', [Validators.required]),

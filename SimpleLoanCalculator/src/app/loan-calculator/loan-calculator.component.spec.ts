@@ -158,6 +158,22 @@ describe('LoanCalculatorComponent', () => {
     expect(loanTerm.valid).toBeTrue;
   });
 
-  
+  it(`submit form cannot be submitted without entering any value`, () => {    
+    fixture.debugElement.query(By.css('form')).triggerEventHandler('click', null);
+    expect(component.inputForm.valid).toBeFalsy();
+  });
 
+  it(`submit form submitted with all values`, () => { 
+    let monthlyIncome = component.inputForm.controls['monthlyIncome'];
+    monthlyIncome.setValue("501");
+    let loanTerm = component.inputForm.controls['loanTerm'];
+    loanTerm.setValue("36");    
+    let requestedAmount = component.inputForm.controls['requestedAmount'];
+    requestedAmount.setValue("20001");
+    let children = component.inputForm.controls['children'];
+    children.setValue("NONE");
+    let coapplicant = component.inputForm.controls['coapplicant'];
+    coapplicant.setValue("NONE");    
+    expect(component.inputForm.valid).toBeTruthy();
+  });
 });
