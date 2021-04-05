@@ -167,7 +167,9 @@ export class LoanCalculatorComponent implements OnInit {
     return loan;
   }
 
-  clearValues() {
+  clearValues() {    
+    this.error = [];
+    this.loanResponse = null;
     this.inputForm.reset();
   }
 }
