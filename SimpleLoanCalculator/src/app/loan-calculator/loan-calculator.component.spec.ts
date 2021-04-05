@@ -37,10 +37,7 @@ describe('LoanCalculatorComponent', () => {
 
     
   }));
-
-  /*beforeEach(() => {
-    fixture.detectChanges();
-  });*/
+ 
 
   it('should create component', () => {
     expect(component).toBeTruthy();
