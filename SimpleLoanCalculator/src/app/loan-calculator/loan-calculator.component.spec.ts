@@ -142,17 +142,17 @@ describe('LoanCalculatorComponent', () => {
   it(`loan term is invalid when value is less than 36 and more than 360`, () => {
     let loanTerm = component.inputForm.controls['loanTerm'];
     loanTerm.setValue("35");    
-    expect(loanTerm.invalid).toBeTrue;
+    expect(loanTerm.invalid).toBeTrue();
     loanTerm.setValue("361");  
-    expect(loanTerm.invalid).toBeTrue;
+    expect(loanTerm.invalid).toBeTrue();
   });
 
   it(`loan term is valid when value is between  36 and 360`, () => {
     let loanTerm = component.inputForm.controls['loanTerm'];
     loanTerm.setValue("36");    
-    expect(loanTerm.valid).toBeTrue;
+    expect(loanTerm.valid).toBeTrue();
     loanTerm.setValue("360");    
-    expect(loanTerm.valid).toBeTrue;
+    expect(loanTerm.valid).toBeTrue();
   });
 
   it(`submit form cannot be submitted without entering any value`, () => {    
