@@ -159,8 +159,8 @@ export class LoanCalculatorComponent implements OnInit {
 
   createPostData(): Loan {
     let loan = new Loan();    
-    loan.monthlyIncome = this.inputForm.get('monthlyIncome').value * this.AMOUNT_CONVERSION_CONST;
-    loan.requestedAmount =  this.inputForm.get('requestedAmount').value * this.AMOUNT_CONVERSION_CONST;
+    loan.monthlyIncome = parseInt(this.removeOtherCharacters(this.inputForm.get('monthlyIncome').value)) *  this.AMOUNT_CONVERSION_CONST;
+    loan.requestedAmount =   parseInt(this.removeOtherCharacters(this.inputForm.get('requestedAmount').value)) * this.AMOUNT_CONVERSION_CONST ;
     loan.loanTerm = this.inputForm.get('loanTerm').value;
     loan.children = this.inputForm.get('children').value;
     loan.coapplicant = this.inputForm.get('coapplicant').value;
